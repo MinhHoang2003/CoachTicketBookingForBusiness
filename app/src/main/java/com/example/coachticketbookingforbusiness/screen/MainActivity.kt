@@ -1,7 +1,8 @@
-package com.example.coachticketbookingforbusiness
+package com.example.coachticketbookingforbusiness.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.coachticketbookingforbusiness.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
