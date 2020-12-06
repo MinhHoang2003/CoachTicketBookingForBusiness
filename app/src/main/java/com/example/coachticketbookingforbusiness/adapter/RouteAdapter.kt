@@ -20,7 +20,10 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class RouteViewHolder(itemView: View, private val onItemClick: ((route: Route) -> Unit)? = null) :
+    inner class RouteViewHolder(
+        itemView: View,
+        private val onItemClick: ((route: Route) -> Unit)? = null
+    ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val textStartTime: TextView = itemView.textStartTime
@@ -43,7 +46,8 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
             textPrice.text = String.format("%s d", route.price.toString())
             textPositionNumber.text =
                 String.format("Giường nằm %s chỗ", route.numberPosition.toString())
-            textRemainingPositionNumber.text = String.format("(Còn %s chỗ)", route.remain)
+            textRemainingPositionNumber.text =
+                String.format("(Còn %s chỗ)", route.numberPosition - route.remain)
         }
 
         override fun onClick(v: View?) {

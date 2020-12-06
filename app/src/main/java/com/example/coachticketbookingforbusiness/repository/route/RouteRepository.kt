@@ -16,9 +16,8 @@ class RouteRepository(private val apiService: APIService) : IRouteRepository {
     }
 
     override fun searchRoutes(
-        pickLocation: String,
-        destination: String,
+        phoneNumber: String,
         date: String
-    ): Single<List<Route>> = apiService.searchRoute(pickLocation, destination, date)
+    ): Single<List<Route>> = apiService.searchRoute(phoneNumber, date)
 
 }

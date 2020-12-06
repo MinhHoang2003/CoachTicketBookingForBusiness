@@ -15,10 +15,9 @@ interface APIService {
     @POST("users/login/")
     fun login(@Body userLoginInformation: UserLoginInformation): Single<List<User>>
 
-    @GET("routes/search")
+    @GET("routes/get")
     fun searchRoute(
-        @Query("pick_location") pickLocation: String,
-        @Query("destination") destination: String,
+        @Query("phone_number") phoneNumber: String,
         @Query("date") date: String
     ): Single<List<Route>>
 

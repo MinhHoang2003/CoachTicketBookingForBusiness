@@ -11,4 +11,8 @@
     <string name="message_success_register">Đăng ký thông tin thành công</string>
     <string name="message_ticket_has_paid">Thanh toán vé xe thành công</string>
     <string name="message_qr_code_preview">Mã vé xe. \nSử dụng mã này để được lên xe.</string>
+    <string name="title_home_routes">Tuyến xe của tôi</string>
+    <string name="title_my_profile">Thông tin của tôi</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="title_route">Tuyến xe của tôi</string>
 </resources>

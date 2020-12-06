@@ -4,5 +4,5 @@ import com.example.coachticketbookingforbusiness.model.Route
 import io.reactivex.rxjava3.core.Single
 
 interface IRouteRepository {
-    fun searchRoutes(pickLocation: String, destination: String, date: String): Single<List<Route>>
+    fun searchRoutes(phoneNumber: String, date: String): Single<List<Route>>
 }
