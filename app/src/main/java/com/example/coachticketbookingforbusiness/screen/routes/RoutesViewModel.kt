@@ -3,6 +3,7 @@ package com.example.coachticketbookingforbusiness.screen.routes
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.coachticketbookingforbusiness.base.BaseViewModel
+import com.example.coachticketbookingforbusiness.base.DebugLog
 import com.example.coachticketbookingforbusiness.base.addToCompositeDisposable
 import com.example.coachticketbookingforbusiness.base.applyScheduler
 import com.example.coachticketbookingforbusiness.model.Route
@@ -19,8 +20,8 @@ class RoutesViewModel : BaseViewModel() {
 
     val routesLiveData: MutableLiveData<List<Route>> = MutableLiveData(listOf())
 
-    fun searchRoutes(pickLocation: String, destination: String, date: String) {
-        routeRepository.searchRoutes(pickLocation, destination, date)
+    fun searchRoutes( phoneNumber: String, date: String) {
+        routeRepository.searchRoutes(phoneNumber, date)
             .applyScheduler()
             .doOnSubscribe { mLoading.value = true }
             .doOnTerminate { mLoading.value = false }
@@ -28,6 +29,7 @@ class RoutesViewModel : BaseViewModel() {
                 Log.e("Hoang", it.toString())
                 routesLiveData.value = it
             }, {
+                DebugLog.e("Hoang ${it.message}")
                 mError.value = it.message
             }).addToCompositeDisposable(disposable)
     }

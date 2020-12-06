@@ -14,27 +14,25 @@ class RoutesFragment : BaseFragment() {
     companion object {
         const val KEY_SEARCH_QUERY = "search_query"
 
-        fun newInstance(routeSearchPattern: RouteSearchPattern) =
+        fun newInstance(phoneNumber: String) =
             RoutesFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(KEY_SEARCH_QUERY, routeSearchPattern)
+                    putString(KEY_SEARCH_QUERY, phoneNumber)
                 }
             }
     }
 
     lateinit var mRoutesViewModel: RoutesViewModel
-    private var search: RouteSearchPattern? = null
     private val routesAdapter = RouteAdapter()
 
 
     override fun initData(bundle: Bundle?) {
         mRoutesViewModel = ViewModelProvider(this).get(RoutesViewModel::class.java)
         bundle?.apply {
-            search = getParcelable(KEY_SEARCH_QUERY)
+            val search = getString(KEY_SEARCH_QUERY)
             search?.apply {
-                textRouteTitle.text = String.format("%s --> %s", pickLocation, destination)
-                textDate.text = date
-                mRoutesViewModel.searchRoutes(pickLocation, destination, date)
+//                textDate.text = date
+                mRoutesViewModel.searchRoutes(search , "2020-11-15")
             }
         }
     }
@@ -43,6 +41,7 @@ class RoutesFragment : BaseFragment() {
         recyclerRoutes.adapter = routesAdapter
         recyclerRoutes.layoutManager = LinearLayoutManager(context)
         toolbar.setNavigationIcon(R.drawable.icon_arrow_left)
+        toolbar.title = getString(R.string.title_route)
     }
 
     override fun initListener() {
