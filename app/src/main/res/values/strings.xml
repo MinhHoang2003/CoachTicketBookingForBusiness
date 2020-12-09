@@ -15,4 +15,5 @@
     <string name="title_my_profile">Thông tin của tôi</string>
     <string name="title_home">Trang chủ</string>
     <string name="title_route">Tuyến xe của tôi</string>
+    <string name="title_qr_scan">Scan vé xe</string>
 </resources>
