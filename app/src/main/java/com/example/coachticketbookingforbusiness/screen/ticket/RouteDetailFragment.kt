@@ -1,13 +1,12 @@
 package com.example.coachticketbookingforbusiness.screen.ticket
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.LocationPagerAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.screen.qr_scan.QRScanFragment
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_route_detail.*
 
 class RouteDetailFragment : BaseFragment() {
@@ -35,7 +34,14 @@ class RouteDetailFragment : BaseFragment() {
     }
 
     override fun initListener() {
-
+        toolbar.setNavigationOnClickListener { popBackStack() }
+        fab.setOnClickListener {
+            val qrScanFragment = QRScanFragment.newInstance()
+            qrScanFragment.setOnReceiveTicketId {
+                context?.let { it1 -> Toasty.success(it1, it, Toast.LENGTH_LONG, true).show() }
+            }
+            pushFragment(qrScanFragment, withAnimation = false)
+        }
     }
 
 

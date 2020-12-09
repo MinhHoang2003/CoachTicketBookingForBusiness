@@ -18,4 +18,8 @@ class MainActivity : BaseActivity() {
         pushFragment(homeFragment, withAnimation = false, tag = "Home")
 
     }
+
+    override fun onBackPressed() {
+        popBackStack()
+    }
 }
