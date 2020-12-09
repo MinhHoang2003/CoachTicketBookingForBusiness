@@ -14,18 +14,26 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textTicketRoute"
+            android:id="@+id/textPickLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            tools:text="Tuyến xe : Ho Chi Minh to Ha Noi" />
+            tools:text="Điểm đón : Hà Nội" />
 
         <TextView
-            android:id="@+id/textTicketDate"
+            android:id="@+id/textDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            tools:text="Ngày xuất phát : 01 December, 2020" />
+            tools:text="Điểm trả : Thành Phố Hồ Chí Minh" />
+
+        <com.example.coachticketbookingforbusiness.base.view.DashedLineView
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_height="1dp"
+            app:lineStrokeWidth="4" />
 
         <TextView
             android:id="@+id/textTicketPositionCode"
@@ -33,6 +41,13 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             tools:text="Chỗ ngồi : 2A, 3B" />
+
+        <TextView
+            android:id="@+id/textPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:text="SDT: 0222222222" />
 
     </LinearLayout>
 

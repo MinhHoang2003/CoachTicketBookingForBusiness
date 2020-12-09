@@ -22,4 +22,12 @@ class LocationRepository(private val apiService: APIService) : ILocationReposito
     override fun getDestination(routeId: Int): Single<List<Location>> =
         apiService.getDestinationLocation(routeId)
 
+    override fun getPickLocationWithTickets(routeId: Int, date: String): Single<List<Location>> =
+        apiService.getPickLocationWithTickets(routeId, date)
+
+    override fun getDestinationLocationWithTickets(
+        routeId: Int,
+        date: String
+    ): Single<List<Location>> = apiService.getDestinationLocationWithTickets(routeId, date)
+
 }

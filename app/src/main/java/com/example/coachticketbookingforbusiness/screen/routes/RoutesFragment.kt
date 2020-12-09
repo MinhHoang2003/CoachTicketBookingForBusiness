@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.RouteAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
-import com.example.coachticketbookingforbusiness.model.RouteSearchPattern
+import com.example.coachticketbookingforbusiness.screen.ticket.RouteDetailFragment
+import com.example.coachticketbookingforbusiness.screen.ticket.TicketFragment
 import kotlinx.android.synthetic.main.fragment_routes.*
 
 class RoutesFragment : BaseFragment() {
@@ -32,7 +33,7 @@ class RoutesFragment : BaseFragment() {
             val search = getString(KEY_SEARCH_QUERY)
             search?.apply {
 //                textDate.text = date
-                mRoutesViewModel.searchRoutes(search , "2020-11-15")
+                mRoutesViewModel.searchRoutes(search, "2020-11-15")
             }
         }
     }
@@ -46,6 +47,8 @@ class RoutesFragment : BaseFragment() {
 
     override fun initListener() {
         routesAdapter.onItemClick = { selectedRoute ->
+            val myTicketFragment = RouteDetailFragment.newInstance()
+            pushFragment(myTicketFragment)
         }
         toolbar.setNavigationOnClickListener {
             popBackStack()

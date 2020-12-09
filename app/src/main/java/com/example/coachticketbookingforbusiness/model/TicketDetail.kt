@@ -13,12 +13,10 @@ data class TicketDetail(
     val price: Int,
     @SerializedName("user_id")
     val useId: String,
-    val start: String,
-    val end: String,
     @SerializedName("pick_location")
     val pickLocation: Location,
     @SerializedName("destination_location")
     val destination: Location,
     @SerializedName("position_code")
-    val positionCode : List<String>
+    val positionCode: List<String>
 )
