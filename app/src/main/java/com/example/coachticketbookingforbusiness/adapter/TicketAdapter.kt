@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coachticketbookingforbusiness.R
-import com.example.coachticketbookingforbusiness.model.Ticket
+import com.example.coachticketbookingforbusiness.model.TicketDetail
 import kotlinx.android.synthetic.main.layout_ticket_item.view.*
 
 class TicketAdapter : RecyclerView.Adapter<TicketAdapter.MyTicketHolder>() {
 
-    private val mTickets = mutableListOf<Ticket>()
+    private val mTickets = mutableListOf<TicketDetail>()
     private var mOnTicketClickListener: ((id: Int) -> Unit)? = null
 
-    fun setData(tickets: List<Ticket>) {
+    fun setData(tickets: List<TicketDetail>) {
         mTickets.clear()
         mTickets.addAll(tickets)
         notifyDataSetChanged()
@@ -29,19 +29,23 @@ class TicketAdapter : RecyclerView.Adapter<TicketAdapter.MyTicketHolder>() {
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val textTicketRoute = itemView.textTicketRoute
-        private val textTicketDate = itemView.textTicketDate
+        private val textTicketPickLocation = itemView.textPickLocation
+        private val textDestination = itemView.textDestination
+        private val textPhoneNumber = itemView.textPhoneNumber
         private val textTicketPosition = itemView.textTicketPositionCode
 
         init {
             itemView.setOnClickListener(this)
         }
 
-        fun bindView(ticket: Ticket) {
-            textTicketRoute.text = String.format("Tuyến xe:  %s -> %s", ticket.start, ticket.end)
-            textTicketDate.text = String.format("Ngày : %s", ticket.date)
+        fun bindView(ticket: TicketDetail) {
+            textTicketPickLocation.text =
+                String.format("Điểm đón : %s", ticket.pickLocation.detailLocation)
+            textDestination.text = String.format("Điểm trả : %s", ticket.destination.detailLocation)
+            textPhoneNumber.text = String.format("SDT : %s", ticket.useId)
             val position =
-                ticket.positionCode.toString().substring(1, ticket.positionCode.toString().length - 1)
+                ticket.positionCode.toString()
+                    .substring(1, ticket.positionCode.toString().length - 1)
 
             textTicketPosition.text = String.format("Chỗ ngồi : %s", position)
         }

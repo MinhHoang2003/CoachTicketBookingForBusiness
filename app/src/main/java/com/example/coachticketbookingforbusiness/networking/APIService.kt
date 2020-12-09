@@ -30,12 +30,21 @@ interface APIService {
     @GET("locations/destination")
     fun getDestinationLocation(@Query("route_id") id: Int): Single<List<Location>>
 
+    @GET("locations/routes/pick")
+    fun getPickLocationWithTickets(@Query("route_id") id: Int, @Query("date") date: String): Single<List<Location>>
+
+    @GET("locations/routes/destination")
+    fun getDestinationLocationWithTickets(@Query("route_id") id: Int, @Query("date") date: String): Single<List<Location>>
+
     @POST("tickets/")
     fun createTicket(@Body ticket: TicketLocalModel): Single<String>
 
-    @GET("tickets")
-    fun getMyTickets(@Query("phone_number") phoneNumber: String): Single<List<Ticket>>
+    @GET("tickets/forDriver")
+    fun getTicketsForRoute(
+        @Query("id") id: Int,
+        @Query("date") date: String
+    ): Single<List<TicketDetail>>
 
     @GET("tickets/detail")
-    fun getTicketDetail(@Query("id") id : Int): Single<TicketDetail>
+    fun getTicketDetail(@Query("id") id: Int): Single<TicketDetail>
 }
