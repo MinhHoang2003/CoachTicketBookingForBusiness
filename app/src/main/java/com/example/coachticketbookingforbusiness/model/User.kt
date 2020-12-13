@@ -10,7 +10,6 @@ data class User(
     @SerializedName("avatar_url")
     val avatarUrl: String,
     val email: String,
-    @Expose(serialize = true, deserialize = false)
     val password : String,
     val address: String,
     val role: Int
