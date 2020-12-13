@@ -5,7 +5,9 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface IUserRepository {
-    fun getUserInformation(phoneNumber: String): Single<User>
     fun register(user: User): Completable
     fun login(username: String, password: String): Single<List<User>>
+    fun getUser(role: Int): Single<List<User>>
+    fun getUser(phoneNumber: String): Single<User>
+    fun updateUser(user: User, phoneNumber: String): Completable
 }

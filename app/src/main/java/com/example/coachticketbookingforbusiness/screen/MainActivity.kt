@@ -1,10 +1,9 @@
 package com.example.coachticketbookingforbusiness.screen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.base.BaseActivity
-import com.example.coachticketbookingforbusiness.screen.home.HomeFragment
+import com.example.coachticketbookingforbusiness.screen.home_admin.HomeForAdminFragment
 
 class MainActivity : BaseActivity() {
 
@@ -14,7 +13,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val homeFragment = HomeFragment.newInstance()
+        val homeFragment = HomeForAdminFragment.newInstance()
         pushFragment(homeFragment, withAnimation = false, tag = "Home")
 
     }

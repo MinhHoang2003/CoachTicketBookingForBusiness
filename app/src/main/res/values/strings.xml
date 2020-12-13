@@ -12,8 +12,19 @@
     <string name="message_ticket_has_paid">Thanh toán vé xe thành công</string>
     <string name="message_qr_code_preview">Mã vé xe. \nSử dụng mã này để được lên xe.</string>
     <string name="title_home_routes">Tuyến xe của tôi</string>
+    <string name="title_home_admin_routes">Tuyến xe</string>
     <string name="title_my_profile">Thông tin của tôi</string>
+    <string name="title_user_info">Thông tin người dùng</string>
     <string name="title_home">Trang chủ</string>
     <string name="title_route">Tuyến xe của tôi</string>
     <string name="title_qr_scan">Scan vé xe</string>
+    <string name="title_coach">Danh sách xe</string>
+    <string name="title_fragment_coach">Danh sách xe</string>
+    <string name="hint_coach_id">Biển số xe</string>
+    <string name="hint_car_brand">Hãng xe</string>
+    <string name="title_edit_coach">Sửa thông tin xe</string>
+    <string name="title_add_coach">Thêm mới xe</string>
+    <string name="menu_add_coach">ADD</string>
+    <string name="menu_edit_coach">EDIT</string>
+    <string name="title_user_list">Thông tin người dùng</string>
 </resources>
