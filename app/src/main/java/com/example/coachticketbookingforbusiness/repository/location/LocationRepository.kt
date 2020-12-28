@@ -2,6 +2,7 @@ package com.example.coachticketbookingforbusiness.repository.location
 
 import com.example.coachticketbookingforbusiness.model.Location
 import com.example.coachticketbookingforbusiness.networking.APIService
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class LocationRepository(private val apiService: APIService) : ILocationRepository {
@@ -30,4 +31,12 @@ class LocationRepository(private val apiService: APIService) : ILocationReposito
         date: String
     ): Single<List<Location>> = apiService.getDestinationLocationWithTickets(routeId, date)
 
+    override fun getLocationByRouteId(id: Int): Single<List<Location>> =
+        apiService.getLocationByRouteId(id)
+
+    override fun getLocation(id: Int): Single<Location> = apiService.getLocation(id)
+    override fun updateLocation(location: Location): Completable =
+        apiService.updateLocation(location)
+
+    override fun addLocation(location: Location): Completable = apiService.addLocation(location)
 }

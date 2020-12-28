@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.RouteAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.view.gone
+import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.ticket.RouteDetailFragment
-import com.example.coachticketbookingforbusiness.screen.ticket.TicketFragment
 import kotlinx.android.synthetic.main.fragment_routes.*
 
 class RoutesFragment : BaseFragment() {
@@ -28,7 +29,6 @@ class RoutesFragment : BaseFragment() {
 
 
     override fun initData(bundle: Bundle?) {
-        mRoutesViewModel = ViewModelProvider(this).get(RoutesViewModel::class.java)
         bundle?.apply {
             val search = getString(KEY_SEARCH_QUERY)
             search?.apply {
@@ -45,6 +45,10 @@ class RoutesFragment : BaseFragment() {
         toolbar.title = getString(R.string.title_route)
     }
 
+    override fun initViewModel() {
+        mRoutesViewModel = ViewModelProvider(this).get(RoutesViewModel::class.java)
+    }
+
     override fun initListener() {
         routesAdapter.onItemClick = { selectedRoute ->
             val myTicketFragment = RouteDetailFragment.newInstance()
@@ -58,7 +62,7 @@ class RoutesFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_routes
 
 
-    override fun initObserver() {
+    override fun observerForever() {
         mRoutesViewModel.mLoading.observe(this, { isLoading ->
             if (isLoading) {
                 showLoading()
@@ -70,7 +74,12 @@ class RoutesFragment : BaseFragment() {
         })
 
         mRoutesViewModel.routesLiveData.observe(this, {
+            if (it.isEmpty()) containerNoData.visible()
+            else containerNoData.gone()
             routesAdapter.setData(it)
         })
+    }
+
+    override fun observerOnce() {
     }
 }

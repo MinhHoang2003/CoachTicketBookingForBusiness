@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.CoachAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.view.gone
+import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.coach_detail_manage.CoachDetailManageFragment
 import kotlinx.android.synthetic.main.coach_manage_fragment.*
 
@@ -28,13 +30,18 @@ class CoachManageFragment : BaseFragment() {
         }
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         mCoachManageViewModel = ViewModelProvider(this).get(CoachManageViewModel::class.java)
+    }
+
+    override fun initData(bundle: Bundle?) {
         mCoachManageViewModel.getCoach()
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
         mCoachManageViewModel.coachLiveData.observe(this, {
+            if (it.isEmpty()) containerNoData.visible()
+            else containerNoData.gone()
             mCoachAdapter.setData(it)
         })
 
@@ -42,6 +49,10 @@ class CoachManageFragment : BaseFragment() {
             if (it) showLoading()
             else hideLoading()
         })
+    }
+
+    override fun observerOnce() {
+        //Nothing
     }
 
     override fun initListener() {

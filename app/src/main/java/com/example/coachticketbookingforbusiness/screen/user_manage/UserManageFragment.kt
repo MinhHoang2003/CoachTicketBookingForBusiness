@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.UserAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.view.gone
+import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.model.UserRole
 import com.example.coachticketbookingforbusiness.screen.user_detail_manage.UserDetailManageFragment
 import kotlinx.android.synthetic.main.user_fragment.*
@@ -36,8 +38,11 @@ class UserManageFragment : BaseFragment() {
         }
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         mUserManageViewModel = ViewModelProvider(this).get(UserManageViewModel::class.java)
+    }
+
+    override fun initData(bundle: Bundle?) {
         bundle?.let {
             mCurrentMode = it.getString(MODE, MODE_DRIVER)
         }
@@ -53,14 +58,19 @@ class UserManageFragment : BaseFragment() {
         )
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
         mUserManageViewModel.mLoading.observe(this, {
             if (it) showLoading() else hideLoading()
         })
 
         mUserManageViewModel.userLiveData.observe(this, {
+            if (it.isEmpty()) containerNoData.visible()
+            else containerNoData.gone()
             mUserAdapter.setData(it)
         })
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {

@@ -37,14 +37,17 @@ class TicketFragment : BaseFragment() {
         }
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         mMyTicketViewModel = ViewModelProvider(this).get(TicketViewModel::class.java)
+    }
+
+    override fun initData(bundle: Bundle?) {
         bundle?.let {
             mMyTicketViewModel.getMyTickets(1, "2020-11-15")
         }
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
         mMyTicketViewModel.myTicketsLiveData.observe(this, {
             mMyTicketAdapter.setData(it)
         })
@@ -52,6 +55,9 @@ class TicketFragment : BaseFragment() {
         mMyTicketViewModel.mLoading.observe(this, {
             if (it) showLoading() else hideLoading()
         })
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {

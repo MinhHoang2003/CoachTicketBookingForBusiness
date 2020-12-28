@@ -32,10 +32,16 @@ class QRScanFragment : BaseFragment(), ZXingScannerView.ResultHandler {
     override fun initView() {
     }
 
+    override fun initViewModel() {
+    }
+
     override fun initData(bundle: Bundle?) {
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {

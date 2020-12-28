@@ -3,6 +3,7 @@ package com.example.coachticketbookingforbusiness.utils
 import android.content.Context
 import com.example.coachticketbookingforbusiness.model.User
 import com.google.gson.Gson
+import io.reactivex.rxjava3.core.Completable
 
 object SharePreferenceUtils {
 
@@ -26,4 +27,12 @@ object SharePreferenceUtils {
         return null
     }
 
+    fun logout(context: Context?) {
+        if (context == null) {
+            return
+        }
+        val editor = context.getSharedPreferences(SHARE_PREF_USER, Context.MODE_PRIVATE).edit()
+        editor.remove(SHARE_KEY_USER)
+        editor.apply()
+    }
 }

@@ -7,6 +7,7 @@ import com.example.coachticketbookingforbusiness.networking.RetrofitClient
 import com.example.coachticketbookingforbusiness.repository.user.UserRepository
 import com.example.coachticketbookingforbusiness.base.addToCompositeDisposable
 import com.example.coachticketbookingforbusiness.base.applyScheduler
+import com.example.coachticketbookingforbusiness.model.UserRole
 import com.example.coachticketbookingforbusiness.utils.SharePreferenceUtils
 
 class LoginViewModel(private val context: Context) : BaseViewModel() {
@@ -15,7 +16,7 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
         UserRepository(RetrofitClient.getAPIService())
     }
 
-    val loginResultLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    val loginResultLiveData: MutableLiveData<UserRole> = MutableLiveData()
 
     fun login(phoneNumber: String, password: String) {
         userRepository.login(phoneNumber, password)
@@ -25,8 +26,15 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
             .subscribe { users, err ->
                 if (users.isNotEmpty()) {
                     val user = users[0]
-                    SharePreferenceUtils.saveUserData(context, user)
-                    loginResultLiveData.value = true
+                    val userRole = UserRole.valueOf(user.role)
+                    if (userRole != null && userRole != UserRole.USER) {
+                        SharePreferenceUtils.saveUserData(context, user)
+                        loginResultLiveData.value = userRole
+                    } else {
+                        mError.value = "Sai thông tin đăng nhập!!!"
+                    }
+                } else {
+                    mError.value = err.message
                 }
             }.addToCompositeDisposable(disposable)
     }

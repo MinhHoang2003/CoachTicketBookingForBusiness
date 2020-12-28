@@ -7,6 +7,7 @@ import retrofit2.http.*
 
 interface APIService {
 
+    // User
     @POST("users/register/")
     fun register(@Body user: User): Completable
 
@@ -22,6 +23,9 @@ interface APIService {
     @PUT("users/update")
     fun updateUser(@Body user: User, @Query("id") phoneNumber: String): Completable
 
+
+    //Route
+
     @GET("routes/get")
     fun searchRoute(
         @Query("phone_number") phoneNumber: String,
@@ -30,6 +34,26 @@ interface APIService {
 
     @GET("routes/position")
     fun getPosition(@Query("route_id") id: Int, @Query("date") date: String): Single<List<Position>>
+
+    @GET("routes/")
+    fun getRoutes(): Single<List<Route>>
+
+    @GET("routes/{id}")
+    fun getRoute(@Path("id") id: Int): Single<Route>
+
+    @PUT("routes/{id}")
+    fun updateRoute(@Body route: RouteBody, @Path("id") id: Int): Completable
+
+    @POST("routes/add")
+    fun add(@Body route: RouteBody): Single<Int>
+
+    // Location
+
+    @PUT("locations/update")
+    fun updateLocation(@Body location: Location): Completable
+
+    @PUT("locations/add")
+    fun addLocation(@Body location: Location): Completable
 
     @GET("locations/pick")
     fun getPickLocation(@Query("route_id") id: Int): Single<List<Location>>
@@ -49,6 +73,13 @@ interface APIService {
         @Query("date") date: String
     ): Single<List<Location>>
 
+    @GET("locations/routes/")
+    fun getLocationByRouteId(@Query("route_id") id: Int): Single<List<Location>>
+
+    @GET("locations/{id}")
+    fun getLocation(@Path("id") id: Int): Single<Location>
+
+    //Ticket
     @POST("tickets/")
     fun createTicket(@Body ticket: TicketLocalModel): Single<String>
 
@@ -61,6 +92,7 @@ interface APIService {
     @GET("tickets/detail")
     fun getTicketDetail(@Query("id") id: Int): Single<TicketDetail>
 
+    // Coach
     @GET("coach/")
     fun getAllCoach(): Single<List<Coach>>
 

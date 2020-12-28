@@ -42,9 +42,12 @@ class UserDetailManageFragment : BaseFragment() {
         toolbar.setNavigationIcon(R.drawable.icon_arrow_left)
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         mUserDetailManageViewModel =
             ViewModelProvider(this).get(UserDetailManageViewModel::class.java)
+    }
+
+    override fun initData(bundle: Bundle?) {
         bundle?.let {
             mCurrentId = it.getString(KEY_USER_ID, Constants.EMPTY_STRING)
             mCurrentMode = if (mCurrentId == Constants.EMPTY_STRING) MODE_ADD_NEW else {
@@ -73,8 +76,7 @@ class UserDetailManageFragment : BaseFragment() {
 
     }
 
-    override fun initObserver() {
-
+    override fun observerForever() {
         mUserDetailManageViewModel.userLiveData.observe(this, {
             setData(it)
         })
@@ -109,6 +111,9 @@ class UserDetailManageFragment : BaseFragment() {
             }
         })
 
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {

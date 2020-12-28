@@ -39,10 +39,10 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
         }
 
         fun bindView(route: Route) {
-            textStartTime.text = route.startTime
-            textStartLocation.text = route.startAddress
-            textEndTime.text = route.endTime
-            textEndLocation.text = route.endAddress
+            textStartTime.text = getDataWithCheck(route.startTime)
+            textStartLocation.text = getDataWithCheck(route.startAddress)
+            textEndTime.text = getDataWithCheck(route.endTime)
+            textEndLocation.text = getDataWithCheck(route.endAddress)
             textPrice.text = String.format("%s d", route.price.toString())
             textPositionNumber.text =
                 String.format("Giường nằm %s chỗ", route.numberPosition.toString())
@@ -53,6 +53,10 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
         override fun onClick(v: View?) {
             onItemClick?.invoke(routes[adapterPosition])
         }
+    }
+
+    private fun getDataWithCheck(value: String?): String {
+        return if (value == null || value.isBlank()) "Chưa có thông tin" else value
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteViewHolder {

@@ -7,27 +7,63 @@
     android:background="@color/main_color"
     tools:context=".screen.home.HomeFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xin chào, "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/textGreeting"
+            app:layout_constraintStart_toEndOf="@+id/textGreeting"
+            app:layout_constraintTop_toTopOf="@id/textGreeting"
+            tools:text="Hoang Pham" />
+
+        <ImageView
+            android:id="@+id/imgLogOut"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_log_out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/containerRoutes"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="8dp"
-        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintEnd_toStartOf="@id/containerProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -50,19 +86,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/containerProfile"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
         app:cardCornerRadius="8dp"
-        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="@id/containerRoutes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/containerRoutes"
         app:layout_constraintTop_toTopOf="@id/containerRoutes">
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -77,7 +112,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/title_user_info"
+                android:text="@string/title_my_profile"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/containerQRScan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/containerRoutes"
+        app:layout_constraintStart_toStartOf="@id/containerRoutes"
+        app:layout_constraintTop_toBottomOf="@id/containerRoutes">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/icon_qr_code" />
+
+            <TextView
+                android:id="@+id/textQRScaneTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/title_qr_scan"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -44,6 +44,11 @@ class CoachDetailManageFragment : BaseFragment() {
         toolbar.setNavigationIcon(R.drawable.icon_arrow_left)
     }
 
+    override fun initViewModel() {
+        mCoachDetailManageViewModel =
+            ViewModelProvider(this).get(CoachDetailManageViewModel::class.java)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (mCurrentMode == MODE_ADD_NEW) inflater.inflate(R.menu.menu_add_coach, menu)
         else inflater.inflate(R.menu.menu_edit_coach, menu)
@@ -51,9 +56,6 @@ class CoachDetailManageFragment : BaseFragment() {
     }
 
     override fun initData(bundle: Bundle?) {
-        mCoachDetailManageViewModel =
-            ViewModelProvider(this).get(CoachDetailManageViewModel::class.java)
-
         bundle?.let {
             mCurrentId = it.getString(KEY_DRIVER_ID, Constants.EMPTY_STRING)
             mCurrentMode = if (mCurrentId == Constants.EMPTY_STRING) MODE_ADD_NEW else MODE_EDIT
@@ -68,8 +70,7 @@ class CoachDetailManageFragment : BaseFragment() {
 
     }
 
-    override fun initObserver() {
-
+    override fun observerForever() {
         mCoachDetailManageViewModel.coachLiveData.observe(this, {
             setData(it)
         })
@@ -104,6 +105,10 @@ class CoachDetailManageFragment : BaseFragment() {
             }
         })
 
+    }
+
+    override fun observerOnce() {
+        //Nothing
     }
 
     private fun setData(coach: Coach?) {
