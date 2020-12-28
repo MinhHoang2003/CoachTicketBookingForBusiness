@@ -39,13 +39,16 @@ class LocationFragment : BaseFragment() {
         }
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         viewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+    }
+
+    override fun initData(bundle: Bundle?) {
         viewModel.getPickLocationWithTickets(1, "2020-11-15")
         viewModel.getDestinationLocationOfRoute(1, "2020-11-15")
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
         viewModel.pickLocationLiveData.observe(this, {
             mPickLocationAdapter.setData(it)
         })
@@ -53,6 +56,9 @@ class LocationFragment : BaseFragment() {
         viewModel.destinationLocationLiveData.observe(this, {
             mDestinationLocationAdapter.setData(it)
         })
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {

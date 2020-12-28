@@ -1,13 +1,15 @@
 package com.example.coachticketbookingforbusiness.screen.authentication.login
 
-import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.example.coachticketbookingforbusiness.base.BaseFragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.coachticketbookingforbusiness.R
+import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.model.UserRole
 import com.example.coachticketbookingforbusiness.screen.authentication.register.RegisterFragment
+import com.example.coachticketbookingforbusiness.screen.home.HomeFragment
+import com.example.coachticketbookingforbusiness.screen.home_admin.HomeForAdminFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.login_fragment.*
 
@@ -24,7 +26,7 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         //Nothing
     }
 
-    override fun initData(bundle: Bundle?) {
+    override fun initViewModel() {
         context?.let {
             mLoginViewModel = ViewModelProvider(
                 this,
@@ -33,14 +35,17 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun initObserver() {
+    override fun initData(bundle: Bundle?) {
+    }
+
+    override fun observerForever() {
         mLoginViewModel.mLoading.observe(this, { isLoading ->
             if (isLoading) {
                 showLoading()
             } else hideLoading()
         })
         mLoginViewModel.loginResultLiveData.observe(this, { result ->
-            if (result) {
+            if (result != null) {
                 context?.let { context ->
                     Toasty.success(
                         context,
@@ -49,11 +54,17 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
                         true
                     ).show()
                 }
+                val home = if (result == UserRole.DRIVER) {
+                    HomeFragment.newInstance()
+                } else HomeForAdminFragment.newInstance()
 
-                rootActivity?.setResult(Activity.RESULT_OK)
-                rootActivity?.finish()
+                replaceFragment(home, withAnimation = false)
             }
         })
+    }
+
+    override fun observerOnce() {
+        //Nothing
     }
 
     override fun initListener() {

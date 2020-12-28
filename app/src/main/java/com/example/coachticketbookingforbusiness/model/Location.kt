@@ -6,7 +6,6 @@ data class Location(
     val id: Int,
     @SerializedName("route_id")
     val routeId: Int,
-    val ordering: Int,
     @SerializedName("stop_station_type")
     val stopStationType: Int,
     val city: String,
@@ -14,5 +13,6 @@ data class Location(
     val detailLocation: String,
     val longitude: Float,
     val latitude: Float,
-    val number : Int
+    val time : String,
+    val number : Int = 0
 )

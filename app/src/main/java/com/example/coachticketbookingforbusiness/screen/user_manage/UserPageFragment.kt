@@ -25,13 +25,22 @@ class UserPageFragment : BaseFragment() {
         toolbar.title = getString(R.string.title_user_list)
     }
 
+    override fun initViewModel() {
+    }
+
     override fun initData(bundle: Bundle?) {
     }
 
-    override fun initObserver() {
+    override fun observerForever() {
+    }
+
+    override fun observerOnce() {
     }
 
     override fun initListener() {
+        toolbar.setNavigationOnClickListener {
+            popBackStack()
+        }
     }
 
 }

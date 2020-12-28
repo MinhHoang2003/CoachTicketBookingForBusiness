@@ -6,8 +6,8 @@
     <string name="choosePositionTitle">Chọn ghế ngồi</string>
     <string name="choosePositionUnSelectedTitle">__</string>
     <string name="chooseLocationTitile">Chọn điểm lên xuống xe</string>
-    <string name="hint_phone_number">Phone number</string>
-    <string name="hint_password">Password</string>
+    <string name="hint_phone_number">Số điện thoại</string>
+    <string name="hint_password">Mật khẩu</string>
     <string name="message_success_register">Đăng ký thông tin thành công</string>
     <string name="message_ticket_has_paid">Thanh toán vé xe thành công</string>
     <string name="message_qr_code_preview">Mã vé xe. \nSử dụng mã này để được lên xe.</string>
@@ -27,4 +27,5 @@
     <string name="menu_add_coach">ADD</string>
     <string name="menu_edit_coach">EDIT</string>
     <string name="title_user_list">Thông tin người dùng</string>
+    <string name="title_route_manage">Thông tin tuyến xe</string>
 </resources>

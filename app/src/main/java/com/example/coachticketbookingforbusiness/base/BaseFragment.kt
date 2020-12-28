@@ -67,8 +67,10 @@ abstract class BaseFragment : Fragment(), BaseView, BaseTransitionFragment {
 
     abstract fun getLayoutId(): Int
     abstract fun initView()
+    abstract fun initViewModel()
     abstract fun initData(bundle: Bundle?)
-    abstract fun initObserver()
+    abstract fun observerForever()
+    abstract fun observerOnce()
     abstract fun initListener()
 
 
@@ -85,7 +87,13 @@ abstract class BaseFragment : Fragment(), BaseView, BaseTransitionFragment {
         initView()
         initListener()
         initData(arguments)
-        initObserver()
+        observerForever()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initViewModel()
+        observerOnce()
     }
 
 }
