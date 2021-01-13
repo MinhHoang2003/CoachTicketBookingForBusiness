@@ -21,4 +21,5 @@ class CoachRepository(private val apiService: APIService) : ICoachRepository {
     override fun getCoachById(id: String): Single<Coach> = apiService.getCoach(id)
     override fun update(id: String, coach: Coach): Completable = apiService.update(id, coach)
     override fun add(coach: Coach): Completable = apiService.add(coach)
+    override fun remove(id: String): Completable = apiService.remove(id)
 }

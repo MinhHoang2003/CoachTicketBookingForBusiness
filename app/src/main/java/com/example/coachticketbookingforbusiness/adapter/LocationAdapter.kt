@@ -1,5 +1,6 @@
 package com.example.coachticketbookingforbusiness.adapter
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.layout_choose_location_item.view.*
 
 class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
+    companion object {
+        const val ID_DELETE = 1
+    }
     private val mLocations = mutableListOf<Location>()
     var onClickLocation: ((id: Int) -> Unit)? = null
 
@@ -24,11 +28,16 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
         notifyDataSetChanged()
     }
 
+    fun getLocationId(position: Int): Int {
+        return mLocations[position].id
+    }
+
     inner class LocationViewHolder(itemView: View, private val listener: ((id: Int) -> Unit)?) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         fun bindView(location: Location) {
@@ -50,6 +59,15 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
 
         override fun onClick(v: View?) {
             listener?.invoke(mLocations[adapterPosition].id)
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.setHeaderTitle("Hãy chọn mục: ");
+            menu?.add(adapterPosition, ID_DELETE, 0, "Xóa điểm dừng")
         }
 
     }

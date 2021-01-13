@@ -1,5 +1,6 @@
 package com.example.coachticketbookingforbusiness.adapter
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,14 +21,19 @@ class CoachAdapter : RecyclerView.Adapter<CoachAdapter.CoachViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun getCoach(position: Int): Coach {
+        return mCoach[position]
+    }
+
     inner class CoachViewHolder(
         itemView: View,
         private val listener: ((id: String) -> Unit)? = null
     ) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         fun bindView(coach: Coach) {
@@ -42,6 +48,15 @@ class CoachAdapter : RecyclerView.Adapter<CoachAdapter.CoachViewHolder>() {
 
         override fun onClick(v: View?) {
             listener?.invoke(mCoach[adapterPosition].id)
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.setHeaderTitle("Hãy chọn mục: ");
+            menu?.add(adapterPosition, LocationAdapter.ID_DELETE, 0, "Xóa thông tin xe khách")
         }
     }
 

@@ -12,7 +12,7 @@ interface APIService {
     fun register(@Body user: User): Completable
 
     @POST("users/login/")
-    fun login(@Body userLoginInformation: UserLoginInformation): Single<List<User>>
+    fun login(@Body userLoginInformation: UserLoginInformation): Single<User>
 
     @GET("users/")
     fun getAllUserByRole(@Query("role") role: Int): Single<List<User>>
@@ -23,6 +23,12 @@ interface APIService {
     @PUT("users/update")
     fun updateUser(@Body user: User, @Query("id") phoneNumber: String): Completable
 
+    @PUT("users/updateWithPassword")
+    fun updateUserWithPassword(
+        @Body user: User,
+        @Query("password") pass: String,
+        @Query("id") phoneNumber: String
+    ): Completable
 
     //Route
 
@@ -47,6 +53,9 @@ interface APIService {
     @POST("routes/add")
     fun add(@Body route: RouteBody): Single<Int>
 
+    @POST("routes/remove")
+    fun remove(@Query("id") id: Int): Completable
+
     // Location
 
     @PUT("locations/update")
@@ -54,6 +63,9 @@ interface APIService {
 
     @PUT("locations/add")
     fun addLocation(@Body location: Location): Completable
+
+    @PUT("locations/remove")
+    fun removeLocation(@Query("id") id: Int): Completable
 
     @GET("locations/pick")
     fun getPickLocation(@Query("route_id") id: Int): Single<List<Location>>
@@ -92,6 +104,9 @@ interface APIService {
     @GET("tickets/detail")
     fun getTicketDetail(@Query("id") id: Int): Single<TicketDetail>
 
+    @GET("tickets/check")
+    fun checkTicket(@Query("id") id: Int, @Query("date") date: String): Single<TicketDetail>
+
     // Coach
     @GET("coach/")
     fun getAllCoach(): Single<List<Coach>>
@@ -104,4 +119,7 @@ interface APIService {
 
     @POST("coach/add")
     fun add(@Body coach: Coach): Completable
+
+    @PUT("coach/remove")
+    fun remove(@Query("id") id: String): Completable
 }

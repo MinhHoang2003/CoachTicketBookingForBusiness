@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/icon_train_ticket" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thông tin vé xe"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:minWidth="300dp"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/textPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            tools:text="Số điện thoại: 02020030303" />
+
+        <com.example.coachticketbookingforbusiness.base.view.DashedLineView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:lineStrokeWidth="4" />
+
+        <TextView
+            android:id="@+id/textPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            tools:text="Mã chỗ ngồi : [20A]" />
+
+        <com.example.coachticketbookingforbusiness.base.view.DashedLineView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:lineStrokeWidth="4" />
+
+        <TextView
+            android:id="@+id/textEndLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            tools:text="Điểm trả : 112 Quang Trung" />
+    </LinearLayout>
+
+</LinearLayout>

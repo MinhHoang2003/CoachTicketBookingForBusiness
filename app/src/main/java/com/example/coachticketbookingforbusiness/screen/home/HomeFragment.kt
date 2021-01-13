@@ -6,12 +6,17 @@ import android.view.View
 import android.widget.Toast
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.dialog.DialogShowTicket
 import com.example.coachticketbookingforbusiness.screen.authentication.login.LoginFragment
+import com.example.coachticketbookingforbusiness.screen.profile.ProfileFragment
 import com.example.coachticketbookingforbusiness.screen.qr_scan.QRScanFragment
 import com.example.coachticketbookingforbusiness.screen.routes.RoutesFragment
 import com.example.coachticketbookingforbusiness.utils.SharePreferenceUtils
+import com.example.coachticketbookingforbusiness.utils.Utils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.home_fragment.*
+import java.lang.Exception
+import java.util.*
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
 
@@ -19,20 +24,18 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
-
+    private lateinit var mHomeViewModel: HomeViewModel
+    private var mDialogShowTicket : DialogShowTicket? = null
     override fun getLayoutId(): Int = R.layout.home_fragment
 
     override fun initView() {
     }
 
     override fun initViewModel() {
-        //Nothing
+        mHomeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
     override fun initData(bundle: Bundle?) {
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
         context?.let {
             val user = SharePreferenceUtils.getLocalUserInformation(it)
             user?.apply {
@@ -46,7 +49,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun observerOnce() {
-        //Nothing
+        mHomeViewModel.ticket.observe(this, {
+            mDialogShowTicket = DialogShowTicket(context!!)
+            mDialogShowTicket?.showDialog(it)
+        })
     }
 
     override fun initListener() {
@@ -68,7 +74,16 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             containerQRScan -> {
                 val qrScanFragment = QRScanFragment.newInstance()
                 qrScanFragment.setOnReceiveTicketId {
-                    context?.let { it1 -> Toasty.success(it1, it, Toast.LENGTH_LONG, true).show() }
+                    try {
+                        val ticketId = it.toInt()
+                        mHomeViewModel.checkTicket(
+                            ticketId,
+//
+                        "2021-01-04" //TODO change date
+                        )
+                    } catch (e: NumberFormatException) {
+
+                    }
                 }
                 pushFragment(qrScanFragment, withAnimation = false)
             }
@@ -77,6 +92,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 SharePreferenceUtils.logout(context)
                 val loginFragment = LoginFragment.newInstance()
                 pushFragment(loginFragment)
+            }
+
+            containerProfile -> {
+                val profile = ProfileFragment.newInstance()
+                pushFragment(profile)
             }
 
         }

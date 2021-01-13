@@ -16,7 +16,7 @@ class CoachManageViewModel : BaseViewModel() {
     }
 
     val coachLiveData = MutableLiveData<List<Coach>>(arrayListOf())
-
+    val isDeleted = MutableLiveData<Boolean>()
     fun getCoach() {
         mCoachRepository.getCoach()
             .applyScheduler()
@@ -28,6 +28,19 @@ class CoachManageViewModel : BaseViewModel() {
                 }
             }
             .addToCompositeDisposable(disposable)
+    }
+
+    fun remove(id: String) {
+        mCoachRepository.remove(id)
+            .applyScheduler()
+            .doOnSubscribe { mLoading.value = true }
+            .doOnTerminate { mLoading.value = false }
+            .subscribe({
+                isDeleted.value = true
+            }, {
+                isDeleted.value = false
+                mError.value = "Không thể xóa xe đang được sử dụng."
+            }).addToCompositeDisposable(disposable)
     }
 
 }

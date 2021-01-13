@@ -29,5 +29,5 @@ class RouteRepository(private val apiService: APIService) : IRouteRepository {
         id
     )
     override fun add(route: RouteBody): Single<Int> = apiService.add(route)
-
+    override fun remove(id: Int): Completable = apiService.remove(id)
 }

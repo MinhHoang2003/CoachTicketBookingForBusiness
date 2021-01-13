@@ -9,4 +9,5 @@ interface ITicketRepository {
     fun createTicket(ticket: TicketLocalModel): Single<String>
     fun getMyTickets(id : Int, date : String): Single<List<TicketDetail>>
     fun getTicketDetail(id: Int): Single<TicketDetail>
+    fun checkTicket(id: Int, date: String): Single<TicketDetail>
 }

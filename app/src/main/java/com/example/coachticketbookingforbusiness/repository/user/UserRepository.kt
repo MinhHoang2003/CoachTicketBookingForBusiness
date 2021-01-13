@@ -4,8 +4,6 @@ package com.example.coachticketbookingforbusiness.repository.user
 import com.example.coachticketbookingforbusiness.model.User
 import com.example.coachticketbookingforbusiness.model.UserLoginInformation
 import com.example.coachticketbookingforbusiness.networking.APIService
-import com.example.coachticketbookingforbusiness.repository.coach.CoachRepository
-import com.example.coachticketbookingforbusiness.repository.coach.ICoachRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
@@ -23,7 +21,7 @@ class UserRepository(private val apiService: APIService) : IUserRepository {
 
     override fun register(user: User): Completable = apiService.register(user)
 
-    override fun login(username: String, password: String): Single<List<User>> {
+    override fun login(username: String, password: String): Single<User> {
         val userLoginInformation = UserLoginInformation(username, password)
         return apiService.login(userLoginInformation)
     }
@@ -32,5 +30,11 @@ class UserRepository(private val apiService: APIService) : IUserRepository {
     override fun getUser(phoneNumber: String): Single<User> = apiService.getUser(phoneNumber)
     override fun updateUser(user: User, phoneNumber: String): Completable =
         apiService.updateUser(user, phoneNumber)
+
+    override fun updateUserWithPassword(
+        user: User,
+        password: String,
+        phoneNumber: String
+    ): Completable = apiService.updateUserWithPassword(user, password, phoneNumber)
 
 }

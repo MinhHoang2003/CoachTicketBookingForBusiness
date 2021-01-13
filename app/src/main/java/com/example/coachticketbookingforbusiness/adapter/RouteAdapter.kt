@@ -1,5 +1,6 @@
 package com.example.coachticketbookingforbusiness.adapter
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,10 @@ import kotlinx.android.synthetic.main.layout_route_items.view.*
 
 class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
 
+    companion object {
+        const val ID_DELETE = 1
+    }
+
     private val routes = mutableListOf<Route>()
     var onItemClick: ((route: Route) -> Unit)? = null
 
@@ -20,11 +25,15 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun getRoute(position: Int): Route {
+        return routes[position]
+    }
+
     inner class RouteViewHolder(
         itemView: View,
         private val onItemClick: ((route: Route) -> Unit)? = null
     ) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
 
         private val textStartTime: TextView = itemView.textStartTime
         private val textStartLocation: TextView = itemView.textStartLocation
@@ -36,6 +45,7 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         fun bindView(route: Route) {
@@ -52,6 +62,15 @@ class RouteAdapter : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
 
         override fun onClick(v: View?) {
             onItemClick?.invoke(routes[adapterPosition])
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.setHeaderTitle("Hãy chọn mục: ")
+            menu?.add(adapterPosition, ID_DELETE, 0, "Xóa thông tin tuyến xe")
         }
     }
 

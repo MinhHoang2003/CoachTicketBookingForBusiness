@@ -24,11 +24,10 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
             .doOnSubscribe { mLoading.value = true }
             .doOnTerminate { mLoading.value = false }
             .subscribe { users, err ->
-                if (users.isNotEmpty()) {
-                    val user = users[0]
-                    val userRole = UserRole.valueOf(user.role)
+                if (err == null) {
+                    val userRole = UserRole.valueOf(users.role)
                     if (userRole != null && userRole != UserRole.USER) {
-                        SharePreferenceUtils.saveUserData(context, user)
+                        SharePreferenceUtils.saveUserData(context, users)
                         loginResultLiveData.value = userRole
                     } else {
                         mError.value = "Sai thông tin đăng nhập!!!"

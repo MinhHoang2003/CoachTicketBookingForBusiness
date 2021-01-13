@@ -39,4 +39,5 @@ class LocationRepository(private val apiService: APIService) : ILocationReposito
         apiService.updateLocation(location)
 
     override fun addLocation(location: Location): Completable = apiService.addLocation(location)
+    override fun removeLocation(id: Int): Completable = apiService.removeLocation(id)
 }

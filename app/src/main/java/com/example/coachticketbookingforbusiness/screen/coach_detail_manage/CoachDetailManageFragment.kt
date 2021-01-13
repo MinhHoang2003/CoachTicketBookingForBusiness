@@ -1,17 +1,18 @@
 package com.example.coachticketbookingforbusiness.screen.coach_detail_manage
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.base.BaseFragment
 import com.example.coachticketbookingforbusiness.model.Coach
+import com.example.coachticketbookingforbusiness.screen.user_detail_manage.UserDetailManageFragment
 import com.example.coachticketbookingforbusiness.utils.Constants
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.coach_detail_manage_fragment.*
-import kotlin.jvm.Throws
 
 class CoachDetailManageFragment : BaseFragment() {
 
@@ -34,12 +35,6 @@ class CoachDetailManageFragment : BaseFragment() {
     private lateinit var mCoachDetailManageViewModel: CoachDetailManageViewModel
     override fun getLayoutId(): Int = R.layout.coach_detail_manage_fragment
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        rootActivity?.setSupportActionBar(toolbar)
-        setHasOptionsMenu(true)
-    }
-
     override fun initView() {
         toolbar.setNavigationIcon(R.drawable.icon_arrow_left)
     }
@@ -59,6 +54,18 @@ class CoachDetailManageFragment : BaseFragment() {
         bundle?.let {
             mCurrentId = it.getString(KEY_DRIVER_ID, Constants.EMPTY_STRING)
             mCurrentMode = if (mCurrentId == Constants.EMPTY_STRING) MODE_ADD_NEW else MODE_EDIT
+        }
+
+
+        context?.let {
+            val arrayAdapter = ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_dropdown_item,
+                arrayListOf(
+                    "Giường nằm 46 chỗ 2 tầng", "Xe 29 chỗ"
+                )
+            )
+            spinnerCoach.adapter = arrayAdapter
         }
 
         if (mCurrentMode == MODE_EDIT) {
@@ -115,8 +122,11 @@ class CoachDetailManageFragment : BaseFragment() {
         coach?.apply {
             edtCoachId.setText(id)
             edtCoachBrand.setText(carBrand)
-            edtPositionNumber.setText(numberPosition.toString())
-            edtFloorNumber.setText(numberFloor.toString())
+            if (this.numberPosition == 46) {
+                spinnerCoach.setSelection(0)
+            } else {
+                spinnerCoach.setSelection(1)
+            }
             edtRate.setText(rate.toString())
             edtPhoneNumber.setText(driverId)
         }
@@ -142,14 +152,14 @@ class CoachDetailManageFragment : BaseFragment() {
     private fun getCoachInformation(): Coach {
         val newId = edtCoachId.text.toString()
         val carBrand = edtCoachBrand.text.toString()
-        val positionNum = edtPositionNumber.text.toString().toInt()
-        val floorsNum = edtFloorNumber.text.toString().toInt()
+        val position: Int = if(spinnerCoach.selectedItemPosition == 0)  46 else 29
+        val floor : Int = if(spinnerCoach.selectedItemPosition == 0) 2 else 1
         val rate = edtRate.text.toString().toFloat()
         val phone = edtPhoneNumber.text.toString()
         return Coach(
             id = newId,
-            numberPosition = positionNum,
-            numberFloor = floorsNum,
+            numberPosition = position,
+            numberFloor = floor,
             driverId = phone,
             carBrand = carBrand,
             images = "",

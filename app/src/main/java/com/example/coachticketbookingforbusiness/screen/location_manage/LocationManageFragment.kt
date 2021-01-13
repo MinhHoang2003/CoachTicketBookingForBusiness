@@ -2,13 +2,17 @@ package com.example.coachticketbookingforbusiness.screen.location_manage
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.LocationAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.DebugLog
 import com.example.coachticketbookingforbusiness.base.view.gone
 import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.location_detail_manage.LocationDetailManageFragment
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.location_manage_fragment.*
 
 class LocationManageFragment : BaseFragment() {
@@ -66,6 +70,15 @@ class LocationManageFragment : BaseFragment() {
     }
 
     override fun observerOnce() {
+        mLocationManageViewModel.isDeleted.observe(this, {
+            if(it) {
+                context?.apply {
+                    Toasty.success(this, "Xóa điểm dừng thành công.", Toast.LENGTH_SHORT, true).show()
+                }
+
+                mLocationManageViewModel.getLocationByRouteId(mCurrentRouteId)
+            }
+        })
     }
 
     override fun initListener() {
@@ -88,6 +101,13 @@ class LocationManageFragment : BaseFragment() {
                 )
             pushFragment(locationDetailManageFragment)
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return if ( item.itemId == LocationAdapter.ID_DELETE) {
+            mLocationManageViewModel.removeLocation(mLocationAdapter.getLocationId(item.groupId))
+            true
+        } else super.onContextItemSelected(item)
     }
 
 }

@@ -11,4 +11,5 @@ interface IRouteRepository {
     fun getRoute(id: Int): Single<Route>
     fun updateRoute(route: RouteBody, id: Int): Completable
     fun add(route: RouteBody): Single<Int>
+    fun remove(id: Int): Completable
 }

@@ -16,7 +16,7 @@ class LocationManageViewModel : BaseViewModel() {
     }
 
     val locationsLiveData = MutableLiveData<List<Location>>(arrayListOf())
-
+    val isDeleted = MutableLiveData<Boolean>()
     fun getLocationByRouteId(id: Int) {
         mLocationRepository.getLocationByRouteId(id)
             .applyScheduler()
@@ -30,6 +30,19 @@ class LocationManageViewModel : BaseViewModel() {
                 }
             }
             .addToCompositeDisposable(disposable)
+    }
+
+    fun removeLocation(id: Int) {
+        mLocationRepository.removeLocation(id)
+            .applyScheduler()
+            .doOnSubscribe { mLoading.value = true }
+            .doOnTerminate { mLoading.value = false }
+            .subscribe({
+                isDeleted.value = true
+            }, {
+                isDeleted.value = false
+                mError.value = it.message
+            }).addToCompositeDisposable(disposable)
     }
 
 

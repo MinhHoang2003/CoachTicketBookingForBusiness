@@ -16,7 +16,7 @@ class RouteManageViewModel : BaseViewModel() {
     }
 
     val routeLiveData = MutableLiveData<List<Route>>()
-
+    val removeResult = MutableLiveData<Boolean>()
 
     fun getRoutes() {
         mRouteRepository.getRoutes()
@@ -28,6 +28,18 @@ class RouteManageViewModel : BaseViewModel() {
                     routeLiveData.value = routes
                 }
             }.addToCompositeDisposable(disposable)
+    }
+
+    fun remove(id: Int) {
+        mRouteRepository.remove(id)
+            .applyScheduler()
+            .doOnSubscribe { mLoading.value = true }
+            .doOnTerminate { mLoading.value = false }
+            .subscribe({
+                removeResult.value = true
+            }, {
+                removeResult.value = false
+            }).addToCompositeDisposable(disposable)
     }
 
 }

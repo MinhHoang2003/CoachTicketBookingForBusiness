@@ -2,13 +2,17 @@ package com.example.coachticketbookingforbusiness.screen.coach_manage
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.CoachAdapter
+import com.example.coachticketbookingforbusiness.adapter.LocationAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
 import com.example.coachticketbookingforbusiness.base.view.gone
 import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.coach_detail_manage.CoachDetailManageFragment
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.coach_manage_fragment.*
 
 class CoachManageFragment : BaseFragment() {
@@ -52,7 +56,25 @@ class CoachManageFragment : BaseFragment() {
     }
 
     override fun observerOnce() {
-        //Nothing
+        mCoachManageViewModel.isDeleted.observe(this, {
+            if (it) {
+                context?.apply {
+                    Toasty.success(this, "Xóa thông tin xe thành công.", Toast.LENGTH_SHORT, true)
+                        .show()
+                }
+
+                mCoachManageViewModel.getCoach()
+            }
+        })
+
+        mCoachManageViewModel.mError.observe(this, {
+            if(it.isNullOrBlank()) return@observe
+            context?.apply {
+                Toasty.error(this, it, Toast.LENGTH_SHORT, true)
+                    .show()
+            }
+
+        })
     }
 
     override fun initListener() {
@@ -69,5 +91,13 @@ class CoachManageFragment : BaseFragment() {
             val coachDetailManageFragment = CoachDetailManageFragment.newInstance()
             pushFragment(coachDetailManageFragment)
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return if ( item.itemId == LocationAdapter.ID_DELETE) {
+            val coach = mCoachAdapter.getCoach(item.groupId)
+            mCoachManageViewModel.remove(coach.id)
+            true
+        } else super.onContextItemSelected(item)
     }
 }

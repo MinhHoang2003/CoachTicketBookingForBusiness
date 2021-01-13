@@ -1,7 +1,6 @@
-package com.example.coachticketbookingforbusiness.screen.home
+package com.example.coachticketbookingforbusiness.screen.ticket
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.coachticketbookingforbusiness.base.BaseViewModel
 import com.example.coachticketbookingforbusiness.base.addToCompositeDisposable
 import com.example.coachticketbookingforbusiness.base.applyScheduler
@@ -9,7 +8,7 @@ import com.example.coachticketbookingforbusiness.model.TicketDetail
 import com.example.coachticketbookingforbusiness.networking.RetrofitClient
 import com.example.coachticketbookingforbusiness.repository.ticket.TicketRepository
 
-class HomeViewModel : BaseViewModel() {
+class RouteDetailViewModel : BaseViewModel() {
     private val mTicketRepository by lazy {
         TicketRepository.getInstance(RetrofitClient.getAPIService())
     }
@@ -27,5 +26,4 @@ class HomeViewModel : BaseViewModel() {
                 }
             }.addToCompositeDisposable(disposable)
     }
-
 }
