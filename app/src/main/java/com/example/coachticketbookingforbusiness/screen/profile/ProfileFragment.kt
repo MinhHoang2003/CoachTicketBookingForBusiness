@@ -46,6 +46,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun setProfileData(user: User) {
+        context?.apply { SharePreferenceUtils.saveUserData(this, user) }
         edtPhoneNumber.setText(user.phoneNumber)
         edtName.setText(user.name)
         edtEmail.setText(user.email)
@@ -86,6 +87,8 @@ class ProfileFragment : BaseFragment() {
                         true
                     ).show()
                 }
+                val phone = edtPhoneNumber.text.toString()
+                mProfileViewModel.getProfile(phone)
                 showPasswordChangeMode(false)
             }
         })

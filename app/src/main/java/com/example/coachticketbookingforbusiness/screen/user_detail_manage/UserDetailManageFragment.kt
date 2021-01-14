@@ -81,19 +81,6 @@ class UserDetailManageFragment : BaseFragment() {
             setData(it)
         })
 
-        mUserDetailManageViewModel.updateResultLiveDate.observe(this, {
-            if (it) {
-                context?.apply {
-                    Toasty.success(
-                        this,
-                        "Cập nhật thông tin thành công!!!",
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                }
-            }
-        })
-
         mUserDetailManageViewModel.mLoading.observe(this, {
             if (it) showLoading()
             else hideLoading()
@@ -114,6 +101,20 @@ class UserDetailManageFragment : BaseFragment() {
     }
 
     override fun observerOnce() {
+
+        mUserDetailManageViewModel.updateResultLiveDate.observe(this, {
+            if (it) {
+                context?.apply {
+                    Toasty.success(
+                        this,
+                        "Cập nhật thông tin thành công!!!",
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
+                }
+            }
+        })
+
     }
 
     override fun initListener() {
