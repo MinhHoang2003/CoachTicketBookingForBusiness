@@ -78,8 +78,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                         val ticketId = it.toInt()
                         mHomeViewModel.checkTicket(
                             ticketId,
-//
-                        "2021-01-04" //TODO change date
+                            Utils.getServerDateFormat(Utils.getCurrentTime())
                         )
                     } catch (e: NumberFormatException) {
 

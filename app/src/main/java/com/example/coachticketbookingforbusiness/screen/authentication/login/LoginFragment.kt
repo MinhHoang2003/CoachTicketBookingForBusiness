@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.view.showError
 import com.example.coachticketbookingforbusiness.model.UserRole
 import com.example.coachticketbookingforbusiness.screen.authentication.register.RegisterFragment
 import com.example.coachticketbookingforbusiness.screen.home.HomeFragment
 import com.example.coachticketbookingforbusiness.screen.home_admin.HomeForAdminFragment
+import com.example.coachticketbookingforbusiness.utils.ToastUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.login_fragment.*
 
@@ -64,7 +66,9 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun observerOnce() {
-        //Nothing
+        mLoginViewModel.mError.observe(this, {
+            if (it.isNotBlank()) ToastUtils.showError(context, it)
+        })
     }
 
     override fun initListener() {
@@ -76,7 +80,15 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         when (v) {
             btnLogin -> {
                 val phoneNumber: String = edtPhoneNumber.text.toString()
+                if (phoneNumber.isBlank()) {
+                    edtPhoneNumber.showError("Số điện thoại không được để trống.")
+                    return
+                }
                 val password: String = edtPassword.text.toString()
+                if (password.isBlank()) {
+                    edtPassword.showError("Password không thể trống.")
+                    return
+                }
                 mLoginViewModel.login(phoneNumber, password)
             }
 

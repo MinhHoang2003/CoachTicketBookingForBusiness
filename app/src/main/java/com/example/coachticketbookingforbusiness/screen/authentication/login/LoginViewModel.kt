@@ -33,7 +33,7 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
                         mError.value = "Sai thông tin đăng nhập!!!"
                     }
                 } else {
-                    mError.value = err.message
+                    mError.value = "Sai thông tin đăng nhập hoặc mật khẩu."
                 }
             }.addToCompositeDisposable(disposable)
     }

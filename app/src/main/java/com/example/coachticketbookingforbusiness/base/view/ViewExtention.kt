@@ -1,6 +1,7 @@
 package com.example.coachticketbookingforbusiness.base.view
 
 import android.view.View
+import com.google.android.material.textfield.TextInputEditText
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -22,4 +23,9 @@ fun View.enable() {
 fun View.disable() {
     alpha = 0.3f
     isEnabled = false
+}
+
+fun TextInputEditText.showError(message : String) {
+    error = message
+    requestFocus()
 }

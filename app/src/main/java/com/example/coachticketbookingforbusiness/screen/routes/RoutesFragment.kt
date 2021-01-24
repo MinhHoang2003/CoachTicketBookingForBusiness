@@ -9,6 +9,7 @@ import com.example.coachticketbookingforbusiness.base.BaseFragment
 import com.example.coachticketbookingforbusiness.base.view.gone
 import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.ticket.RouteDetailFragment
+import com.example.coachticketbookingforbusiness.utils.Utils
 import kotlinx.android.synthetic.main.fragment_routes.*
 
 class RoutesFragment : BaseFragment() {
@@ -33,7 +34,12 @@ class RoutesFragment : BaseFragment() {
             val search = getString(KEY_SEARCH_QUERY)
             search?.apply {
 //                textDate.text = date
-                mRoutesViewModel.searchRoutes(search, "2020-11-15")
+                mRoutesViewModel.searchRoutes(
+                    search,
+                    Utils.getServerDateFormat(
+                        Utils.getCurrentTime()
+                    )
+                )
             }
         }
     }

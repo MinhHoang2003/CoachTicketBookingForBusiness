@@ -41,7 +41,7 @@ class LocationManageViewModel : BaseViewModel() {
                 isDeleted.value = true
             }, {
                 isDeleted.value = false
-                mError.value = it.message
+                mError.value = "Không thể xóa điểm dừng này."
             }).addToCompositeDisposable(disposable)
     }
 

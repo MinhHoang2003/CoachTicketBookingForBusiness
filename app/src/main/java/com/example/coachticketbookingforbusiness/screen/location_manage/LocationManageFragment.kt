@@ -12,6 +12,7 @@ import com.example.coachticketbookingforbusiness.base.DebugLog
 import com.example.coachticketbookingforbusiness.base.view.gone
 import com.example.coachticketbookingforbusiness.base.view.visible
 import com.example.coachticketbookingforbusiness.screen.location_detail_manage.LocationDetailManageFragment
+import com.example.coachticketbookingforbusiness.utils.ToastUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.location_manage_fragment.*
 
@@ -78,6 +79,10 @@ class LocationManageFragment : BaseFragment() {
 
                 mLocationManageViewModel.getLocationByRouteId(mCurrentRouteId)
             }
+        })
+
+        mLocationManageViewModel.mError.observe(this, {
+            if (it.isNotBlank()) ToastUtils.showError(context, it)
         })
     }
 

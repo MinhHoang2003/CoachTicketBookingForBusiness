@@ -8,6 +8,7 @@ import com.example.coachticketbookingforbusiness.adapter.LocationPagerAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
 import com.example.coachticketbookingforbusiness.dialog.DialogShowTicket
 import com.example.coachticketbookingforbusiness.screen.qr_scan.QRScanFragment
+import com.example.coachticketbookingforbusiness.utils.Utils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_route_detail.*
 
@@ -58,7 +59,7 @@ class RouteDetailFragment : BaseFragment() {
                     val ticketId = it.toInt()
                     mRouteDetailViewModel.checkTicket(
                         ticketId,
-                        "2020-11-15"
+                        Utils.getServerDateFormat(Utils.getCurrentTime())
                     )
                 } catch (e: NumberFormatException) {
 

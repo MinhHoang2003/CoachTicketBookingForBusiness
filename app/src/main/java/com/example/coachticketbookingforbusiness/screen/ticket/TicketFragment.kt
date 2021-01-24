@@ -8,6 +8,7 @@ import com.example.coachticketbookingforbusiness.adapter.LocationAdapter
 import com.example.coachticketbookingforbusiness.adapter.TicketAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
 import com.example.coachticketbookingforbusiness.screen.location.LocationFragment
+import com.example.coachticketbookingforbusiness.utils.Utils
 import kotlinx.android.synthetic.main.my_ticket_fragment.*
 
 class TicketFragment : BaseFragment() {
@@ -43,7 +44,11 @@ class TicketFragment : BaseFragment() {
 
     override fun initData(bundle: Bundle?) {
         bundle?.let {
-            mMyTicketViewModel.getMyTickets(1, "2020-11-15")
+            mMyTicketViewModel.getMyTickets(
+                1, Utils.getServerDateFormat(
+                    Utils.getCurrentTime()
+                )
+            )
         }
     }
 

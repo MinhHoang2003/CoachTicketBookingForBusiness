@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.base.view.showError
 import com.example.coachticketbookingforbusiness.model.User
 import com.example.coachticketbookingforbusiness.model.UserRole
 import com.example.coachticketbookingforbusiness.screen.authentication.login.LoginFragment
 import com.example.coachticketbookingforbusiness.screen.home.HomeFragment
+import com.example.coachticketbookingforbusiness.utils.ToastUtils
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.register_fragment.*
 
@@ -75,6 +77,8 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
                 getUserData { user, err ->
                     if (err == VALIDATE_FIELDS) {
                         mRegisterViewModel?.register(user!!)
+                    } else if (err == ERROR_CODE_PASSWORD_NOT_SAME) {
+                        edtConfirmPassword.showError("Xác nhận không trùng khớp")
                     }
                 }
             }
@@ -88,10 +92,26 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
 
     private fun getUserData(result: (User?, Int) -> Unit) {
         val phoneNumber = edtPhoneNumber.text.toString()
+        if (phoneNumber.isBlank()) {
+            edtPhoneNumber.showError("Số điện thoại không được để trống.")
+            return
+        }
         val name = edtName.text.toString()
+        if (name.isBlank()) {
+            edtName.showError("Tên không được để trống")
+            return
+        }
         val email = edtEmail.text.toString()
         val password = edtPassword.text.toString()
+        if (password.isBlank()) {
+            edtPassword.showError("Mật khẩu không được để trống.")
+            return
+        }
         val confirmPassword = edtConfirmPassword.text.toString()
+        if (confirmPassword.isBlank()) {
+            edtConfirmPassword.showError("Xác nhận mật khẩu không được để trống.")
+            return
+        }
         val address = edtAddress.text.toString()
         if (password == confirmPassword) {
             result.invoke(
@@ -105,6 +125,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
                     UserRole.DRIVER.value
                 ), VALIDATE_FIELDS
             )
+            return
         }
         result.invoke(null, ERROR_CODE_PASSWORD_NOT_SAME)
     }

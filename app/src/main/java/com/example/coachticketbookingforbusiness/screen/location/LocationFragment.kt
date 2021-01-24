@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coachticketbookingforbusiness.R
 import com.example.coachticketbookingforbusiness.adapter.LocationAdapter
 import com.example.coachticketbookingforbusiness.base.BaseFragment
+import com.example.coachticketbookingforbusiness.utils.Utils
 import kotlinx.android.synthetic.main.location_fragment.*
 
 class LocationFragment : BaseFragment() {
@@ -17,7 +18,7 @@ class LocationFragment : BaseFragment() {
 
         fun newInstance(routeId: Int, date: String) = LocationFragment().apply {
             val bundle = Bundle()
-            bundle.putInt(LocationFragment.KEY_ROUTE_ID, id)
+            bundle.putInt(LocationFragment.KEY_ROUTE_ID, routeId)
             bundle.putString(LocationFragment.KEY_DATE, date)
             arguments = bundle
         }
@@ -44,8 +45,18 @@ class LocationFragment : BaseFragment() {
     }
 
     override fun initData(bundle: Bundle?) {
-        viewModel.getPickLocationWithTickets(1, "2020-11-15")
-        viewModel.getDestinationLocationOfRoute(1, "2020-11-15")
+
+        bundle?.apply {
+            val routeId = getInt(KEY_ROUTE_ID)
+            viewModel.getPickLocationWithTickets(
+                routeId, Utils.getServerDateFormat(
+                    Utils.getCurrentTime()
+                )
+            )
+            viewModel.getDestinationLocationOfRoute(
+                routeId, Utils.getServerDateFormat(Utils.getCurrentTime())
+            )
+        }
     }
 
     override fun observerForever() {
