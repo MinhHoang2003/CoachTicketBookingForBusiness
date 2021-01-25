@@ -159,7 +159,7 @@ class LocationDetailManageFragment : BaseFragment() {
             routeId = mCurrentRouteId,
             detailLocation = edtDetailAddress.text.toString(),
             city = edtCity.text.toString(),
-            longitude = (edtLatitude.text.toString()).toFloat(),
+            longitude = (edtLongitude.text.toString()).toFloat(),
             latitude = (edtLatitude.text.toString()).toFloat(),
             stopStationType = spinnerStopStationType.selectedItemPosition + 1
         )
